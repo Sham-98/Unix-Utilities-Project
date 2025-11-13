@@ -20,16 +20,13 @@ for (int i = 1; i < argc; i++) {
         }
 
 int count;
-unsigned char c;
+char ch;
+
 
         while (fread(&count, sizeof(int), 1, fp) == 1) {
-            if (fread(&c, sizeof(unsigned char), 1, fp) != 1) {
-                break;
-            }
-
-            for (int j = 0; j < count; j++) {
-                putchar(c);
-            }
+            fread(&ch, sizeof(char), 1, fp);
+            for (int j = 0; j < count; j++)
+                printf("%c", ch);
         }
 
         fclose(fp);

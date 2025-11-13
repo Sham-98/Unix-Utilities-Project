@@ -11,36 +11,33 @@ int main(int argc, char *argv[]) {
     }
 
     for (int i = 1; i < argc; i++) {
-    FILE *fp = fopen(argv[i], "rb");
+    FILE *fp = fopen(argv[i], "r");
         if (fp == NULL) {
-            printf("my_zip: cannot open file %s\n", argv[i]);
-            exit(1);
+            printf("my_zip: cannot open file\n");
+            return 1;
         }
 
     int count = 0;
-    int curr, prev;
+    int curr = fgetc(fp);
 
-    prev = fgetc(fp);
-    if (prev == EOF){
+    if (curr == EOF){
         fclose(fp);
         continue;
     }
 
-    count = 1;
-    while ((curr= fgetc(fp)) != EOF){
-        if (curr == prev){
+    while (1){
+        int next = fgetc(fp);
             count++;
 
-    }   else {
-            fwrite(&count, sizeof(int), 1, stdout);
-            fputc(prev, stdout);
-            prev = curr;
-            count = 1;
-        }
-    }
-    fwrite(&count, sizeof(int), 1, stdout);
+            if (next != curr) {
+                fwrite(&count, sizeof(int), 1, stdout);  // 4 bytes
+                fwrite(&curr, sizeof(char), 1, stdout); // 1 byte
+                count = 0;
+                curr = next;
+            }
 
-    fputc(prev, stdout);
+            if (next == EOF) break;
+        }
     fclose(fp);
     }
 return 0;
