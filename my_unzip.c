@@ -12,21 +12,21 @@ int main(int argc, char *argv[]) {
 
 
 
-for (int i = 1; i < argc; i++) {
-    FILE *fp = fopen(argv[i], "rb");
+    for (int i = 1; i < argc; i++) {
+        FILE *fp = fopen(argv[i], "r");
         if (fp == NULL) {
-            printf("my_unzip: cannot open file %s\n", argv[i]);
-            exit(1);
+            printf("my_unzip: cannot open file\n");
+            return 1;
         }
 
-int count;
-char ch;
-
+        int count;
+        char ch;
 
         while (fread(&count, sizeof(int), 1, fp) == 1) {
             fread(&ch, sizeof(char), 1, fp);
-            for (int j = 0; j < count; j++)
+            for (int j = 0; j < count; j++) {
                 printf("%c", ch);
+            }
         }
 
         fclose(fp);
