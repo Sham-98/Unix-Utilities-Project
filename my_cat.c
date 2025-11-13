@@ -3,6 +3,7 @@
 #include <string.h>
 
 
+//printing contents of one or more files.
 
 int main(int argc, char *argv[]) {
     if (argc == 1) {

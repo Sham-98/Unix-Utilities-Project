@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 
 //compress files using run-length encoding (RLE).
@@ -12,7 +11,7 @@ int main(int argc, char *argv[]) {
     }
 
     for (int i = 1; i < argc; i++) {
-    FILE *fp = fopen(argv[i], "r");
+    FILE *fp = fopen(argv[i], "rb");
         if (fp == NULL) {
             printf("my_zip: cannot open file %s\n", argv[i]);
             exit(1);
@@ -40,6 +39,7 @@ int main(int argc, char *argv[]) {
         }
     }
     fwrite(&count, sizeof(int), 1, stdout);
+
     fputc(prev, stdout);
     fclose(fp);
     }
